@@ -1,0 +1,52 @@
+<odoo>
+    <template id="report_asignacion_material_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="header">
+                    <div class="text-center">
+                        <img src="asignacion_material/static/description/logo.png" width="300" height="100" />
+                    </div>
+                </div>
+                <div class="page">
+                    <h1>Hoja de entrega</h1>
+                    <p><strong>Entrega nº:</strong> <span t-field="doc.name"/></p>
+                    <p><strong>Responsable de entrega: </strong><span t-field="doc.responsable_entrega_id.name"/></p>
+                    <p><strong>Operario: </strong><span t-field="doc.empleado_id.name"/></p>
+                    <p><strong>Fecha de entrega: </strong><span t-field="doc.date"/></p>
+                    <table style="border-collapse: collapse; width: 100%; border: 2px solid black;">
+                        <thead>
+                            <tr style="background-color: #f8f9fa;">
+                                <th style="border: 2px solid black; padding: 5px; background-color: #e9ecef;">Material</th>
+                                <th style="border: 2px solid black; padding: 5px; background-color: #e9ecef;">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 50vh;">
+                            <t t-foreach="doc.asignacion_line_ids" t-as="line">
+                                <tr>
+                                    <td style="border: 2px solid black; padding: 5px;"><span t-field="line.material_id"/></td>
+                                    <td style="border: 2px solid black; padding: 5px;"><span t-field="line.cantidad"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/><br/>
+                    <div class="firma-box text-center" >
+                        <h3>Firma operario:</h3>
+                            <img t-attf-src="data:image/png;base64,{{doc.firma}}" style="max-width:200px;"/>
+
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report 
+        id="asignacion_material_report" 
+        model="asignacion.material" 
+        string="Hoja de entrega"
+        report_type="qweb-pdf" 
+        name="asignacion_material.report_asignacion_material_template" 
+        file="asignacion_material.report_asignacion_material_template" 
+        print_report_name="'Hoja de Entrega - '+object.name"
+    />
+</odoo>

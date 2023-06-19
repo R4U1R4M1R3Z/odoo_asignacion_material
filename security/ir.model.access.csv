@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+asignacion_material_access,asignacion.material.access,model_asignacion_material,group_material_user,1,1,1,1
+material_access,material.access,model_material,group_material_user,1,1,1,1
+asignacion_material_line_access,asignacion.material.line.access,model_asignacion_material_line,group_asignacion_material_line_user,1,1,1,1

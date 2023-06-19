@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+        <!-- Creación de la categoría -->
+        <record id="module_category_material_management" model="ir.module.category">
+            <field name="name">Gestión de Material</field>
+            <field name="description">Gestión de material y asignaciones de material</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Creación de los grupos -->
+        <record id="group_material_user" model="res.groups">
+            <field name="name">Usuario de Material</field>
+            <field name="category_id" ref="module_category_material_management"/>
+        </record>
+
+        <record id="group_asignacion_material_line_user" model="res.groups">
+            <field name="name">Usuario de Asignación de Material Line</field>
+            <field name="category_id" ref="module_category_material_management"/>
+        </record>
+
+        <!-- Reglas de acceso -->
+        <record id="asignacion_material_access" model="ir.model.access">
+            <field name="name">asignacion.material.access</field>
+            <field name="model_id" ref="model_asignacion_material"/>
+            <field name="group_id" ref="group_material_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <record id="material_access" model="ir.model.access">
+            <field name="name">material.access</field>
+            <field name="model_id" ref="model_material"/>
+            <field name="group_id" ref="group_material_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <record id="asignacion_material_line_access" model="ir.model.access">
+            <field name="name">asignacion.material.line.access</field>
+            <field name="model_id" ref="model_asignacion_material_line"/>
+            <field name="group_id" ref="group_asignacion_material_line_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+    </data>
+</odoo>

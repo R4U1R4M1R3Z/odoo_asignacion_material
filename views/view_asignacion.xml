@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Acciones de Menú -->
+        <record id="action_asignacion_material" model="ir.actions.act_window">
+            <field name="name">Asignación de Material</field>
+            <field name="res_model">asignacion.material</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="menu_asignacion_material" model="ir.ui.menu">
+            <field name="name">Asignación de Material</field>
+            <field name="sequence" eval="10"/>
+            <field name="action" ref="action_asignacion_material"/>
+        </record>
+
+        <record id="action_material_list" model="ir.actions.act_window">
+            <field name="name">Materiales</field>
+            <field name="res_model">material</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- Vistas -->
+        <record id="view_asignacion_material_form" model="ir.ui.view">
+            <field name="name">asignacion.material.form</field>
+            <field name="model">asignacion.material</field>
+            <field name="arch" type="xml">
+                <form string="Asignación de Material">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="date"/>
+                            <field name="responsable_entrega_id"/>
+                            <field name="empleado_id" string="Operario" />
+                        </group>
+                        <notebook>
+                            <page string="Asignaciones de Material">
+                                <field name="asignacion_line_ids" mode="tree,kanban">
+                                    <tree string="Asignaciones de Material" editable="bottom">
+                                        <field name="material_id"/>
+                                        <field name="cantidad"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="material_id"/>
+                                            <field name="cantidad"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Firma">
+                                <field name="firma" widget="signature" string="Firma"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_asignacion_material_tree" model="ir.ui.view">
+            <field name="name">asignacion.material.tree</field>
+            <field name="model">asignacion.material</field>
+            <field name="arch" type="xml">
+                <tree string="Asignación de Material">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="responsable_entrega_id"/>
+                    <field name="empleado_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_form_material" model="ir.ui.view">
+            <field name="name">material.form</field>
+            <field name="model">material</field>
+            <field name="arch" type="xml">
+                <form string="Material">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="asignacion_count" widget="statinfo"/>
+                        </group>
+                        <notebook>
+                            <page string="Asignaciones">
+                                <field name="asignacion_line_ids">
+                                    <tree limit="10">
+                                        <field name="operario_id"/>
+                                        <field name="asignacion_id" string="Identificador" readonly="1">
+                                            <a href="{'type': 'ir.actions.act_window',
+                                                    'name': 'Asignación de Material',
+                                                    'res_model': 'asignacion.material',
+                                                    'view_mode': 'form',
+                                                    'res_id': asignacion_material_id.id}">
+                                                <field name="asignacion_id"/>
+                                            </a>
+                                        </field>
+                                        <field name="fecha"/>
+                                    </tree>
+                                    <pager/>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Menús -->
+        <menuitem id="menu_asignacion_material_root" name="Asignación de Material" sequence="10" web_icon="asignacion_material,static/description/icon.png"/>
+        <menuitem id="menu_asignacion_material" name="Asignación de Material" parent="menu_asignacion_material_root" action="action_asignacion_material"/>
+        <menuitem id="menu_material_list" name="Materiales" parent="menu_asignacion_material_root" sequence="10" action="action_material_list"/>
+    </data>
+</odoo>
